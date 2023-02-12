@@ -7,6 +7,10 @@
     background-color: #676767;
 }
 
+.bg-color-three-reasons {
+    background-color: #fff;
+}
+
 .ui-menu-color-home {
     background-color: #e67e22;
 }
@@ -22,6 +26,7 @@
 .ui-menu-color-download {
     background-color: #525252;
 }
+
 
 /*------------------------------------------Special paddings/margins/text */
 
@@ -48,6 +53,23 @@ h4 {
 
 .text-center {
     text-align: center;
+}
+
+.row-table {
+    display: table;
+}
+
+.section-column {
+    display: table-cell;
+    padding: 0 30px 30px;
+    float: none;
+}
+
+.section-heading {
+    font-family: "Exo",sans-serif;
+    font-weight: 300;
+    margin-top: 25px;
+    margin-bottom: 40px;
 }
 
 /*------------------------------------------Heading */
