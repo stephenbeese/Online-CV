@@ -1,5 +1,32 @@
-function fetchGitHubInformation(event) {
+// const octokit = new Octokit({
+//     auth: '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'
+//   })
+  
+//   await octokit.request('GET /rate_limit', {
+//     headers: {
+//       'X-GitHub-Api-Version': '2022-11-28'
+//     }
+//   })
 
+
+function userInformationHTML(user) {
+    return `
+        <h2>${user.name}
+            <span class="small-name">
+                (@<a href="${user.html_url}" target="_blank">${user.login}</a>)
+            </span>
+        </h2>
+        <div class="gh-content">
+            <div class="gh-avatar">
+                <a href="${user.html_url}" target="_blank">
+                    <img src="${user.avatar_url}" width="80" height="80" alt="${user.login}" />
+                </a>
+            </div>
+            <p>Followers: ${user.followers} - Following: ${user.following} <br> Repos: ${user.public_repos}</p>
+        </div>`;
+}
+
+function fetchGitHubInformation(event) {
     var username = $("#gh-username").val();
     if (!username) {
         $("#gh-user-data").html(`<h2>Please enter a GitHub username</h2>`);
@@ -11,4 +38,22 @@ function fetchGitHubInformation(event) {
             <img src="assets/css/loader.gif" alt="loading..."/>
         </div>`);
 
+    $.when(
+        $.getJSON(`https://api.github.com/users/${username}`)
+    ).then(
+        function (response) {
+            var userData = response;
+            $("#gh-user-data").html(userInformationHTML(userData));
+        },
+        function (errorResponse) {
+            if (errorResponse.status === 404) {
+                $("#gh-user-data").html(
+                    `<h2>No info found for user ${username}</h2>`);
+            } else {
+                console.log(errorResponse);
+                $("#gh-user-data").html(
+                    `<h2>Error: ${errorResponse.responseJSON.message}</h2>`);
+                    console.log(response.JSON);
+            }
+        });
 }
